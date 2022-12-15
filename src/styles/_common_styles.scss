@@ -1,0 +1,26 @@
+@mixin grad-border($width, $height, $border-width, $border-radius, $gradient) {
+  // work only with box-sizing: border-box;
+  position: relative;
+  width: $width;
+  height: $height;
+  // margin: 5 * $border-width;
+  border-radius: $border-radius - $border-width;
+  // border-radius: $border-radius;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -$border-width;
+    bottom: -$border-width;
+    left: -$border-width;
+    right: -$border-width;
+    background: $gradient;
+    border-radius: $border-radius;
+    z-index: -1;
+  }
+}
+
+$pink-border-gradient: linear-gradient(315.75deg, rgba(254, 189, 171, 0.74) 30.06%, rgba(243, 169, 248, 0.66) 50.74%, #E0D8F0 80.49%, #EAF7FE 127.9%, #EAF7FE 149.54%),
+  linear-gradient(315.75deg, rgba(254, 189, 171, 0.74) 30.06%, rgba(243, 169, 248, 0.66) 50.74%, #E0D8F0 80.49%, #EAF7FE 127.9%, #EAF7FE 149.54%);
+
+$orange-border-gradient: linear-gradient(113.96deg, #F9804B 1.49%, #FE9013 101.44%);
