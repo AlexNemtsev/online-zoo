@@ -1,30 +1,24 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const CopyWebPackPlugin = require('copy-webpack-plugin');
-const MiniCss = require('mini-css-extract-plugin'); // Позволяет выносить стили из тега head
+const MiniCss = require('mini-css-extract-plugin');
 
 module.exports = {
-  context: path.resolve(__dirname, './src/pages'), // Указывает на папку с исходниками
+  context: path.resolve(__dirname, './src/pages'),
   mode: 'development',
   entry: {
     main: './main/index.js',
-    // donate: './donate/index.js'
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
   },
   resolve: {
-    extensions: ['.js', '.json', '.png', '.scss'], // Расширения по умолчанию, которые не нужно указывать
-    // alias: {
-    //   '@models': path.resolve(__dirname, 'src/models'), // псевдоним для пути
-    //   '@': path.resolve(__dirname, 'src'),
-    // }
+    extensions: ['.js', '.json', '.png', '.scss'],
   },
   optimization: {
     splitChunks: {
-      chunks: 'all' // Позволяет выносить библиотеки отдельно из файлов
+      chunks: 'all'
     }
   },
   plugins: [
@@ -37,42 +31,33 @@ module.exports = {
       template: './donate/indexd.html'
     }),
     new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false, // Этот параметр не даёт Cleaner выпиливать ресурсы без изменений из html-builder
+      cleanStaleWebpackAssets: false,
       output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'docs'),
       },
     }),
 
-    // new CopyWebPackPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, 'src/assets/favicon.ico'),
-    //       to: path.resolve(__dirname, 'dist')
-    //     },
-    //   ]
-    // }),
     new MiniCss({
-      // filename: '[name].[contenthash].css'
-      filename: '[name].css'
+      filename: '[name].[contenthash].css'
     })
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCss.loader, 'css-loader'], // Справа налево
+        use: [MiniCss.loader, 'css-loader'],
       },
       {
         test: /\.s[ac]ss/,
-        use: [MiniCss.loader, 'css-loader', 'sass-loader'], // Справа налево
+        use: [MiniCss.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
         type: 'asset/resource',
       },
       {
-        test: /\.html$/, // Позволяет цеплять изображения из тега img
+        test: /\.html$/,
         use: [
           'html-loader'
         ]
